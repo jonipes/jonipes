@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>eFootball — JONI PES</title>
+  <style>
+    :root{--bg:#050415;--accent1:#7c3aed;--accent2:#06b6d4;--muted:#98a8bf}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,system-ui,Arial;background:linear-gradient(180deg,var(--bg),#07112a);color:#eaf2ff}
+    .wrap{max-width:980px;margin:28px auto;padding:18px}
+    header{display:flex;align-items:center;justify-content:space-between}
+    .back{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:8px 10px;border-radius:10px;color:inherit;cursor:pointer}
+    .tabs{display:flex;gap:8px;margin-top:18px}
+    .tab{padding:10px 12px;border-radius:10px;background:rgba(255,255,255,0.02);cursor:pointer}
+    .tab.active{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#020617;font-weight:700}
+    .card{margin-top:12px;padding:14px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent)}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:8px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.03)}
+    .price{font-weight:700}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h2 style="margin:0">⚽ eFootball</h2>
+        <div style="color:var(--muted);font-size:13px">Halaman resmi — JONI PES</div>
+      </div>
+      <button class="back" onclick="window.close()">Tutup</button>
+    </header>
+
+    <div class="tabs">
+      <div class="tab active" data-tab="config" onclick="switchTab(event)">CONFIG</div>
+      <div class="tab" data-tab="stok" onclick="switchTab(event)">STOK AKUN</div>
+    </div>
+
+    <div id="config" class="card">
+      <h3>CONFIG — eFootball</h3>
+      <p style="color:var(--muted)">Pengaturan kontrol dan sensitivitas untuk performa optimal.</p>
+      <pre style="background:#020217;padding:12px;border-radius:8px;color:#bcd;overflow:auto">// eFootball config
+sensitivity=1.12
+dpi=400
+layout=classic
+assist_mode=off</pre>
+      <button onclick="downloadConfig()" style="margin-top:10px;padding:10px;border-radius:8px;background:linear-gradient(90deg,var(--accent1),var(--accent2));border:0;color:#020617;cursor:pointer">
+        Download CONFIG
+      </button>
+    </div>
+
+    <div id="stok" class="card" style="display:none">
+      <h3>STOK AKUN — eFootball</h3>
+      <table>
+        <thead><tr><th>Username</th><th>Level</th><th>Rank</th><th>Harga</th></tr></thead>
+        <tbody>
+          <tr><td>ePro_45</td><td>45</td><td>Diamond</td><td class="price">Rp 120.000</td></tr>
+          <tr><td>StrikerX</td><td>38</td><td>Platinum</td><td class="price">Rp 80.000</td></tr>
+          <tr><td>KeeperOne</td><td>50</td><td>Master</td><td class="price">Rp 200.000</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    function switchTab(e){
+      const tab = e.currentTarget.dataset.tab;
+      document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+      document.getElementById('config').style.display = tab === 'config' ? 'block' : 'none';
+      document.getElementById('stok').style.display = tab === 'stok' ? 'block' : 'none';
+    }
+    function downloadConfig(){
+      const content = "// eFootball CONFIG\\nsensitivity=1.12\\ndpi=400\\nlayout=classic\\nassist_mode=off\\n";
+      const blob = new Blob([content], {type: "text/plain"});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url; a.download = "efootball_config.txt"; document.body.appendChild(a); a.click(); a.remove();
+      URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>
